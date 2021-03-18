@@ -1,0 +1,31 @@
+.stackbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--stackbox-bg-color);
+  border-radius: 20px;
+
+  padding: 20px;
+
+  height: 10.5em;
+}
+
+.stackbox > div {
+  margin-bottom: 10px;
+}
+
+.stackbox > div > div {
+  border-radius: 999999px;
+}
+
+.stackbox > h1 {
+  margin-bottom: 3px;
+  text-align: center;
+}
+
+.stackbox > p {
+  color: var(--stackbox-text-color);
+  text-align: center;
+}
