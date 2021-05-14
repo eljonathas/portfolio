@@ -1,0 +1,67 @@
+.certsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.certsGrid {
+    display: grid;
+    list-style: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.certsGrid li {
+    display: flex;
+    flex-direction: column;
+    background: var(--projects-bg-color);
+    padding: 1em;
+    border-radius: 20px;
+}
+
+.certsGrid li h1 {
+    font-size: 1.6em;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+.certsGrid li p {
+    color: rgb(180, 180, 180);
+    margin-bottom: 25px;
+}
+
+.certsGrid li a,
+.certsGrid li span {
+    margin-top: auto;
+    width: fit-content;
+}
+
+.certsGrid li button {
+    display: flex;
+    align-items: center;   
+    outline: none;
+    padding: .5em;
+    border-radius: 4px;
+    border-color: transparent;
+    background-color: var(--navbar-button-bg);
+    color: white;
+    margin-top: auto;
+    width: fit-content;
+    font-size: .9em;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.certsGrid li button svg {
+    margin-right: 5px;
+}
+
+.certsGrid li span {
+    color:rgba(255, 255, 255, .4);
+}
+
+@media only screen and (max-width: 1200px){
+    .certsGrid {
+        grid-template-columns: repeat(1, 1fr);
+    } 
+}

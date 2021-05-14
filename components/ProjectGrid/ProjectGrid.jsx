@@ -34,7 +34,7 @@ export default function ProjectGrid({ children }){
             </div>
 
             <a href="https://radiobrasil.site" target="_blank" rel="noopener noreferrer" className={s.demoButton}>
-              VER DEMO
+              Ver demo
             </a>
           </div>
         </div>
@@ -55,14 +55,14 @@ export default function ProjectGrid({ children }){
               </div>
               <div className={s.icon}>
                 <Image 
-                  src="/images/js.png" 
+                  src="/images/ts.png" 
                   width={30}
                   height={30}
                 />
               </div>
             </div>
             <a href="https://portfy.vercel.app" target="_blank" rel="noopener noreferrer" className={s.demoButton}>
-              VER DEMO
+              Ver demo
             </a>
           </div>
         </div>

@@ -1,21 +1,29 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link, animateScroll as scroll } from 'react-scroll'
 
 import Image from 'next/image'
 import Head from 'next/head'
 
+import ReactGA from 'react-ga'
+
 import { RiInstagramFill } from 'react-icons/ri'
-import { FaFacebookSquare, FaLinkedin, FaArrowUp, FaGithub, FaEnvelope } from 'react-icons/fa'
+import { FaFacebookSquare, FaLinkedin, FaArrowUp, FaGithub, FaEnvelope, FaBars } from 'react-icons/fa'
 
 import styles from '../styles/Home.module.css'
 import StackBox from '../components/StackBox'
 import stacks from '../utils/stacks'
 import ProjectGrid from '../components/ProjectGrid'
+import CertsGrid from '../components/CertsGrid'
+import HistoricGrid from '../components/HistoricGrid'
+import SubMenu from '../components/SubMenu'
 
-export default function Home() {
+import useOutsideClick from '../utils/useOutsideClick'
+
+export default function Home({ titleName }) {
   const ref = useRef(null)
+  const subMenu = useRef(null)
   const toUpButton = useRef(null)
-
+  const [showSubMenu, setShowSubMenu] = useState(false)
   
   useEffect(() => {
     const target = ref.current;
@@ -23,11 +31,20 @@ export default function Home() {
     target.classList.add(styles.containerActive)
     
     window.addEventListener('scroll', activeTopButton)
+
+    ReactGA.initialize('UA-107769128-2');
+    ReactGA.pageview(window.location.pathname + window.location.search);
     
     return () => {
       window.removeEventListener('scroll', activeTopButton)
     }
   }, [])
+
+  useOutsideClick(subMenu, () => {
+    if(showSubMenu){
+      setShowSubMenu(false)
+    }
+  })
 
   function activeTopButton () {
     const target = toUpButton.current;
@@ -52,19 +69,31 @@ export default function Home() {
   return (
     <div className={styles.container} ref={ref}>
       <Head>
-          <title>Jonathas Andrade - Portfolio</title>
+          <title>{titleName}</title>
           <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <SubMenu
+        globalStyles={styles}
+        showSubMenu={showSubMenu}
+        subMenuRef={subMenu}
+        setShowSubMenu={setShowSubMenu}
+      />
 
       <nav className={styles.navbar}>
         <ul>
           <h1>Jonathas Andrade</h1>
-          {/* <li>Blog</li> */}
-          <li>Resumo</li>
-          <li>Contato</li>
+          <a className={styles.dOnly} href="https://drive.google.com/file/d/1RA4S4adELbDcdOTHvuyrCXRewAjAbh0b/" target="_blank" rel="noopener noreferrer">
+            <li>Resumo</li>
+          </a>
+          <li className={styles.dOnly+' '+styles.blogSoon}>Blog <span>EM BREVE</span></li>
         </ul>
 
-        <div className={styles.navbarSocial}>
+        <div className={styles.mOnly} onClick={() => setShowSubMenu(!showSubMenu)}>
+          <FaBars size={24}/>
+        </div>
+
+        <div className={styles.navbarSocial += ' '+styles.dOnly}>
           <a href="https://www.instagram.com/andrade.exe/" target="_blank" rel="noopener noreferrer"><RiInstagramFill size={24} /></a>
           <a href="https://www.facebook.com/thmrss/" target="_blank" rel="noopener noreferrer"><FaFacebookSquare size={22} /></a>
           <a href="https://www.linkedin.com/in/eljonathas" target="_blank" rel="noopener noreferrer"><FaLinkedin size={22} /></a>
@@ -83,10 +112,8 @@ export default function Home() {
               <li><Link activeClass={styles.itemActive} to="about" spy={true} smooth={true} duration={500} offset={-20} >Sobre mim</Link></li>
               <li><Link activeClass={styles.itemActive} to="stacks" spy={true} smooth={true} duration={500} offset={-20} >Stacks</Link></li>
               <li><Link activeClass={styles.itemActive} to="projects" spy={true} smooth={true} duration={500} offset={-20} >Projetos</Link></li>
-              {/* <li>Artigos</li> */}
-              {/* <li>Contribuições</li> */}
-              <li>Certificações</li>
-              <li>Histórico</li>
+              <li><Link activeClass={styles.itemActive} to="certificate" spy={true} smooth={true} duration={500} offset={-20} >Certificações</Link></li>
+              <li><Link activeClass={styles.itemActive} to="historic" spy={true} smooth={true} duration={500} offset={-20} >Histórico</Link></li>
             </ul>
 
             <p>Feito com 💘 por <a href="https://github.com/eljonathas" target="_blank" rel="noopener noreferrer">Jonathas Andrade</a></p>
@@ -102,7 +129,7 @@ export default function Home() {
 
           <section className={styles.rightContent}>
             <article className={styles.contentArticle} id="about">
-              <h1 className={styles.articleTitle}>Algumas informações sobre mim 🤷‍♂️</h1>
+              <h1 className={styles.articleTitle}>Algumas informações sobre mim 🏃‍♂️</h1>
               <div className={styles.articleDesc}>
                 <div className={styles.personImage}>
                   <Image 
@@ -150,15 +177,33 @@ export default function Home() {
 
               <ProjectGrid />
             </article>
-            <article className={styles.contentArticle} id="projects">
+            <article className={styles.contentArticle} id="certificate">
               <h1 className={styles.articleTitle}>Certificações 🎓</h1>
               <p className={styles.articleDesc}>
                 Uma boa base de estudos teóricos também foi essencial durante a minha evolução como desenvolvedor. Por isso, abaixo é possível conferir algumas das minhas certificações obtidas ao longo do tempo nas área da tecnologia, ciência e inovação.
               </p>
+              <CertsGrid />
+            </article>
+            <article className={styles.contentArticle} id="historic">
+              <h1 className={styles.articleTitle}>Histórico profissional 👜</h1>
+              <p className={styles.articleDesc}>
+                Abaixo você pode conferir meu histórico profissional e os cargos que já desempenhei durante a minha carreira profissional e acadêmica.
+              </p>
+              <HistoricGrid />
             </article>
           </section>
         </div>
       </main>
     </div>
   )
+}
+
+export function getStaticProps(){
+  const titleName = "Jonathas Andrade - Portfólio"
+
+  return {
+    props: {
+      titleName
+    }
+  }
 }
