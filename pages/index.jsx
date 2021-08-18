@@ -1,76 +1,85 @@
-import { useRef, useEffect, useState } from 'react'
-import { Link, animateScroll as scroll } from 'react-scroll'
+import { useRef, useEffect, useState } from "react";
+import { Link, animateScroll as scroll } from "react-scroll";
 
-import Image from 'next/image'
-import Head from 'next/head'
+import Image from "next/image";
+import Head from "next/head";
 
-import ReactGA from 'react-ga'
+import ReactGA from "react-ga";
 
-import { RiInstagramFill } from 'react-icons/ri'
-import { FaFacebookSquare, FaLinkedin, FaArrowUp, FaGithub, FaEnvelope, FaBars } from 'react-icons/fa'
+import { RiInstagramFill } from "react-icons/ri";
+import {
+  FaFacebookSquare,
+  FaLinkedin,
+  FaArrowUp,
+  FaGithub,
+  FaEnvelope,
+  FaBars,
+} from "react-icons/fa";
 
-import styles from '../styles/Home.module.css'
-import StackBox from '../components/StackBox'
-import stacks from '../utils/stacks'
-import ProjectGrid from '../components/ProjectGrid'
-import CertsGrid from '../components/CertsGrid'
-import HistoricGrid from '../components/HistoricGrid'
-import SubMenu from '../components/SubMenu'
+import styles from "../styles/Home.module.css";
+import StackBox from "../components/StackBox";
+import stacks from "../utils/stacks";
+import ProjectGrid from "../components/ProjectGrid";
+import CertsGrid from "../components/CertsGrid";
+import HistoricGrid from "../components/HistoricGrid";
+import SubMenu from "../components/SubMenu";
 
-import useOutsideClick from '../utils/useOutsideClick'
+import useOutsideClick from "../utils/useOutsideClick";
 
 export default function Home({ titleName }) {
-  const ref = useRef(null)
-  const subMenu = useRef(null)
-  const toUpButton = useRef(null)
-  const [showSubMenu, setShowSubMenu] = useState(false)
-  
+  const ref = useRef(null);
+  const subMenu = useRef(null);
+  const toUpButton = useRef(null);
+  const [showSubMenu, setShowSubMenu] = useState(false);
+
   useEffect(() => {
     const target = ref.current;
-    
-    target.classList.add(styles.containerActive)
-    
-    window.addEventListener('scroll', activeTopButton)
 
-    ReactGA.initialize('UA-107769128-2');
+    target.classList.add(styles.containerActive);
+
+    window.addEventListener("scroll", activeTopButton);
+
+    ReactGA.initialize("UA-107769128-2");
     ReactGA.pageview(window.location.pathname + window.location.search);
-    
+
     return () => {
-      window.removeEventListener('scroll', activeTopButton)
-    }
-  }, [])
+      window.removeEventListener("scroll", activeTopButton);
+    };
+  }, []);
 
   useOutsideClick(subMenu, () => {
-    if(showSubMenu){
-      setShowSubMenu(false)
+    if (showSubMenu) {
+      setShowSubMenu(false);
     }
-  })
+  });
 
-  function activeTopButton () {
+  function activeTopButton() {
     const target = toUpButton.current;
 
-    if(window.scrollY > 100){
-      !target.classList.contains(styles.toUpButtonActive) && target.classList.add(styles.toUpButtonActive);
-    }else{
-      target.classList.contains(styles.toUpButtonActive) && target.classList.remove(styles.toUpButtonActive);
+    if (window.scrollY > 100) {
+      !target.classList.contains(styles.toUpButtonActive) &&
+        target.classList.add(styles.toUpButtonActive);
+    } else {
+      target.classList.contains(styles.toUpButtonActive) &&
+        target.classList.remove(styles.toUpButtonActive);
     }
   }
 
-  function scrollToTop (e){
-    if(e.target.classList.contains(styles.toUpButtonActive)){
+  function scrollToTop(e) {
+    if (e.target.classList.contains(styles.toUpButtonActive)) {
       scroll.scrollToTop({
         duration: 500,
         delay: 0,
-        smooth: 'easeInOutQuart'
-      })
+        smooth: "easeInOutQuart",
+      });
     }
   }
-  
+
   return (
     <div className={styles.container} ref={ref}>
       <Head>
-          <title>{titleName}</title>
-          <link rel="icon" href="/favicon.ico" />
+        <title>{titleName}</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <SubMenu
@@ -83,22 +92,61 @@ export default function Home({ titleName }) {
       <nav className={styles.navbar}>
         <ul>
           <h1>Jonathas Andrade</h1>
-          <a className={styles.dOnly} href="https://drive.google.com/file/d/1RA4S4adELbDcdOTHvuyrCXRewAjAbh0b/" target="_blank" rel="noopener noreferrer">
+          <a
+            className={styles.dOnly}
+            href="https://drive.google.com/file/d/1hDUli4rFIuPNGIcW6rBmbQoJPK4JCCev/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <li>Resumo</li>
           </a>
-          <li className={styles.dOnly+' '+styles.blogSoon}>Blog <span>EM BREVE</span></li>
+          <li className={styles.dOnly + " " + styles.blogSoon}>
+            Blog <span>EM BREVE</span>
+          </li>
         </ul>
 
-        <div className={styles.mOnly} onClick={() => setShowSubMenu(!showSubMenu)}>
-          <FaBars size={24}/>
+        <div
+          className={styles.mOnly}
+          onClick={() => setShowSubMenu(!showSubMenu)}
+        >
+          <FaBars size={24} />
         </div>
 
-        <div className={styles.navbarSocial += ' '+styles.dOnly}>
-          <a href="https://www.instagram.com/andrade.exe/" target="_blank" rel="noopener noreferrer"><RiInstagramFill size={24} /></a>
-          <a href="https://www.facebook.com/thmrss/" target="_blank" rel="noopener noreferrer"><FaFacebookSquare size={22} /></a>
-          <a href="https://www.linkedin.com/in/eljonathas" target="_blank" rel="noopener noreferrer"><FaLinkedin size={22} /></a>
-          <a href="malito:jonathas.andrade5@gmail.com" target="_blank" rel="noopener noreferrer"><FaEnvelope size={22} /></a>
-          <a className={styles.navbarButton} href="https://github.com/eljonathas" target="_blank" rel="noopener noreferrer">
+        <div className={(styles.navbarSocial += " " + styles.dOnly)}>
+          <a
+            href="https://www.instagram.com/jonathassx/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <RiInstagramFill size={24} />
+          </a>
+          <a
+            href="https://www.facebook.com/thmrss/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaFacebookSquare size={22} />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/eljonathas"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaLinkedin size={22} />
+          </a>
+          <a
+            href="malito:jonathas.andrade5@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaEnvelope size={22} />
+          </a>
+          <a
+            className={styles.navbarButton}
+            href="https://github.com/eljonathas"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <FaGithub size={19} />
             Github
           </a>
@@ -109,17 +157,81 @@ export default function Home({ titleName }) {
         <div className={styles.flexRow}>
           <div className={styles.lateralMenu}>
             <ul>
-              <li><Link activeClass={styles.itemActive} to="about" spy={true} smooth={true} duration={500} offset={-20} >Sobre mim</Link></li>
-              <li><Link activeClass={styles.itemActive} to="stacks" spy={true} smooth={true} duration={500} offset={-20} >Stacks</Link></li>
-              <li><Link activeClass={styles.itemActive} to="projects" spy={true} smooth={true} duration={500} offset={-20} >Projetos</Link></li>
-              <li><Link activeClass={styles.itemActive} to="certificate" spy={true} smooth={true} duration={500} offset={-20} >Certificações</Link></li>
-              <li><Link activeClass={styles.itemActive} to="historic" spy={true} smooth={true} duration={500} offset={-20} >Histórico</Link></li>
+              <li>
+                <Link
+                  activeClass={styles.itemActive}
+                  to="about"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  offset={-20}
+                >
+                  Sobre mim
+                </Link>
+              </li>
+              <li>
+                <Link
+                  activeClass={styles.itemActive}
+                  to="stacks"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  offset={-20}
+                >
+                  Stacks
+                </Link>
+              </li>
+              <li>
+                <Link
+                  activeClass={styles.itemActive}
+                  to="projects"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  offset={-20}
+                >
+                  Projetos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  activeClass={styles.itemActive}
+                  to="certificate"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  offset={-20}
+                >
+                  Certificações
+                </Link>
+              </li>
+              <li>
+                <Link
+                  activeClass={styles.itemActive}
+                  to="historic"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                  offset={-20}
+                >
+                  Histórico
+                </Link>
+              </li>
             </ul>
 
-            <p>Feito com 💘 por <a href="https://github.com/eljonathas" target="_blank" rel="noopener noreferrer">Jonathas Andrade</a></p>
+            <p>
+              Feito com 💘 por{" "}
+              <a
+                href="https://github.com/eljonathas"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Jonathas Andrade
+              </a>
+            </p>
 
-            <button 
-              className={styles.toUpButton} 
+            <button
+              className={styles.toUpButton}
               ref={toUpButton}
               onClick={scrollToTop}
             >
@@ -129,50 +241,64 @@ export default function Home({ titleName }) {
 
           <section className={styles.rightContent}>
             <article className={styles.contentArticle} id="about">
-              <h1 className={styles.articleTitle}>Algumas informações sobre mim 🏃‍♂️</h1>
+              <h1 className={styles.articleTitle}>
+                Algumas informações sobre mim 🏃‍♂️
+              </h1>
               <div className={styles.articleDesc}>
                 <div className={styles.personImage}>
-                  <Image 
+                  <Image
                     src="/images/jonathas.jpeg"
                     width={784}
                     height={1056}
                   />
                 </div>
-                Me chamo Jonathas dos Santos Andrade, sou estudante de Ciência da Computação na Universidade Federal do Estado do Pará desde o começo de 2020, porém sou programador desde 2015. Iniciei meus aprendizados na área com o desenvolvimento de
-                aplicações web com as principais ferramentas daquele período (PHP, Javascript, Jquery, HTML e CSS), e desde então fui evoluindo meus conhecimentos
-                com a criação de aplicações por meio do uso de tecnologias ainda mais recentes, principalmente em relação ao Javascript (React, React Native, Vue e Node).
-                Atualmente utilizo mais as últimas para extrair o melhor desempenho possível para os meus apps, mas também iniciei os estudos com as linguagens Python e Ruby, com foco na primeira para a área
-                de Ciência de Dados, mais especificamente para trabalhar com Inteligência Artificial nos meus projetos e pesquisas futuras.
+                Me chamo Jonathas dos Santos Andrade, sou desenvolvedor
+                Front-End orientado pela experiência do usuário e apaixonado por
+                expressar a criatividade. Também sou graduando em Ciência da
+                Computação na Universidade Federal do Pará. Minha paixão por
+                programação começou durante meu primeiro contato com JavaScript
+                em 2014 e desde então tenho buscado a evolução nessa linguagem
+                para estimular a criação de aplicações eficazes e inspiradoras
+                que envolvem o uso das tecnologias derivadas dela como React,
+                Next.js, Vue, React Native, Node.js, Express, TypeScript entre
+                outras. Mesmo assim, como sou fascinado pelo conhecimento e pela
+                vontade de criar experiências marcantes, busco também
+                frequentemente desenvolver aplicativos que envolvem todo o
+                ecossistema Web e Mobile, desde o Front-End até o Back-End, com
+                foco nos métodos ágeis de programação para, além de manter a
+                legibilidade dos meus códigos, assegurar uma velocidade de
+                entrega para continuar pondo em prática ainda mais ideias.
               </div>
             </article>
             <article className={styles.contentArticle} id="stacks">
-              <h1 className={styles.articleTitle}>Ferramentas que utilizo 🌠</h1>
+              <h1 className={styles.articleTitle}>
+                Ferramentas que utilizo 🌠
+              </h1>
               <p className={styles.articleDesc}>
-                Confira algumas das linguagens e ferramentas que utilizo e já utilizei ao longo do tempo como programador e entusiasta em computação:
+                Confira algumas das linguagens e ferramentas que utilizo e já
+                utilizei ao longo do tempo como programador e entusiasta em
+                computação:
               </p>
               <div className={styles.stacksGrid}>
-                {
-                  stacks.map(stack => (
-                    <StackBox key={stack.stack}>
-                      <div>
-                        <Image
-                          src={stack.icon}
-                          width={45}
-                          height={45}
-                        />
-                      </div>
-                      <h1>{ stack.stack }</h1>
-                      <p>{ stack.info }</p>
-                    </StackBox>
-                  ))
-                }
+                {stacks.map((stack) => (
+                  <StackBox key={stack.stack}>
+                    <div>
+                      <Image src={stack.icon} width={45} height={45} />
+                    </div>
+                    <h1>{stack.stack}</h1>
+                    <p>{stack.info}</p>
+                  </StackBox>
+                ))}
               </div>
             </article>
             <article className={styles.contentArticle} id="projects">
               <h1 className={styles.articleTitle}>Projetos mais recentes 🚀</h1>
               <p className={styles.articleDesc}>
-                Tecnologia sempre me fascinou bastante desde a infância. Então, para solidificar meus conhecimentos em computação e como forma de
-                melhorar meus estudos na área, muitos projetos foram desenvolvidos por mim com as ferramentas já mencionadas, e aqui você pode conferir alguns deles:
+                Tecnologia sempre me fascinou bastante desde a infância. Então,
+                para solidificar meus conhecimentos em computação e como forma
+                de melhorar meus estudos na área, muitos projetos foram
+                desenvolvidos por mim com as ferramentas já mencionadas, e aqui
+                você pode conferir alguns deles:
               </p>
 
               <ProjectGrid />
@@ -180,14 +306,19 @@ export default function Home({ titleName }) {
             <article className={styles.contentArticle} id="certificate">
               <h1 className={styles.articleTitle}>Certificações 🎓</h1>
               <p className={styles.articleDesc}>
-                Uma boa base de estudos teóricos também foi essencial durante a minha evolução como desenvolvedor. Por isso, abaixo é possível conferir algumas das minhas certificações obtidas ao longo do tempo nas área da tecnologia, ciência e inovação.
+                Uma boa base de estudos teóricos também foi essencial durante a
+                minha evolução como desenvolvedor. Por isso, abaixo é possível
+                conferir algumas das minhas certificações obtidas ao longo do
+                tempo nas área da tecnologia, ciência e inovação.
               </p>
               <CertsGrid />
             </article>
             <article className={styles.contentArticle} id="historic">
               <h1 className={styles.articleTitle}>Histórico profissional 👜</h1>
               <p className={styles.articleDesc}>
-                Abaixo você pode conferir meu histórico profissional e os cargos que já desempenhei durante a minha carreira profissional e acadêmica.
+                Abaixo você pode conferir meu histórico profissional e os cargos
+                que já desempenhei durante a minha carreira profissional e
+                acadêmico.
               </p>
               <HistoricGrid />
             </article>
@@ -195,15 +326,15 @@ export default function Home({ titleName }) {
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-export function getStaticProps(){
-  const titleName = "Jonathas Andrade - Portfólio"
+export function getStaticProps() {
+  const titleName = "Jonathas Andrade - Portfólio";
 
   return {
     props: {
-      titleName
-    }
-  }
+      titleName,
+    },
+  };
 }

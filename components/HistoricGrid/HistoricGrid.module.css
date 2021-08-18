@@ -1,40 +1,40 @@
 .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
 }
 
 .gridItem {
-    display: flex;
-    align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
 }
 
 .gridItem > h1 {
-    margin-right: 1em;
-    color: var(--stackbox-text-color);
-    font-weight: 500;
-    min-width: fit-content;
+  margin-right: 1em;
+  color: var(--stackbox-text-color);
+  font-weight: 500;
+  min-width: fit-content;
 }
 
 .gridItem > div > h1 {
-    margin-bottom: 5px;
-    font-size: 1.4em;
+  margin-bottom: 5px;
+  font-size: 1.4em;
 }
 
 .gridItem > div > p {
-    color: var(--desc-text-color);
+  color: var(--desc-text-color);
 }
 
-@media only screen and (max-width: 1200px){
-    .gridItem {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-    } 
+@media only screen and (max-width: 1200px) {
+  .gridItem {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
 
-    .gridItem > h1 {
-        min-width: 100%;
-        margin-bottom: .3em;
-        margin-right: 0;
-    }
+  .gridItem > h1 {
+    min-width: 100%;
+    margin-bottom: 0.3em;
+    margin-right: 0;
+  }
 }
